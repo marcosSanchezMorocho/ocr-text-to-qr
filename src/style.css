@@ -1,0 +1,508 @@
+:root  {
+    --white: #ECECEC;
+    --black: #3D3D3D;
+    --blue: #5463FF;
+    --red: #FF1818;
+    --yellow: #FFC300;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+html {
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+    font-weight: normal;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 2fr 8fr;
+}
+
+button {
+    cursor: pointer;
+
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.sidebar {
+    background-color: var(--blue);
+}
+
+.logo {
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
+    font-weight: 600;
+
+    text-align: center;
+
+    color: var(--yellow);
+
+    padding: 1.5rem 2rem 1rem 2rem;
+}
+
+.logo span {
+    font-size: 2.6rem;
+    color: var(--white);
+    filter: drop-shadow(1px 4px var(--red))
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.todo-dashboard {
+    padding: 0 1rem
+}
+
+.todo-dashboard > div{
+    padding: 1rem 0 0.2rem 3rem;
+}
+
+.border-top {
+    border-top: 3px solid var(--white);
+}
+
+.border-bottom {
+    border-bottom: 3px solid var(--white);
+}
+
+.flex-grow {
+    flex-grow: 3;
+}
+
+#project-buttons {
+    max-height: 60vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--white) var(--blue);
+}
+
+.dashboard-button {
+    background-color: transparent;
+    border: 0px solid;
+
+    margin-bottom: 0.6rem;
+
+    color: var(--white);
+    text-align: start;
+    font-family: inherit;
+    font-size: 1.2rem;
+
+    direction: ltr;
+
+    transition: all 0.5s;
+}
+
+.project-button.animation-start {
+    opacity: 0;
+    transform: translateX(-20px) scale(0.95);
+    transition: all 0.5s;
+}
+
+.project-button.animation-finished {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.add-button{
+    margin-top: 0.8rem;
+}
+
+.dashboard-button:hover {
+    font-weight: 600;
+    padding-left: 1rem;
+}
+
+.github {
+    margin-top: auto;
+    padding-top: 0.5rem;
+
+    color: var(--white);
+    font-size: 1rem;
+
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.github svg{
+    width: 50px;
+    margin-right: 0.5rem;
+}
+
+.content {
+    background-color: var(--white);
+    color: var(--black);
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+.current-view {
+    margin: 0 2rem;
+    padding: 1.93rem 1.5rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--black);
+}
+
+.current-view > div {
+    align-items: center;
+    display: flex;
+    gap: 2rem;
+}
+
+.current-view button {
+    background-color: transparent;
+    border: 0px solid transparent;
+    font-family: inherit;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: all 0.4s;
+}
+
+.current-view button:not(:disabled):hover {
+    transform: scale(95%);
+}
+
+.current-view label {
+    display: none;
+}
+
+.current-view select {
+    background-color: var(--white);
+    height: 1.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 0;
+    border-bottom: 2px solid var(--black);
+}
+
+.current-view select:not(:disabled):hover {
+    border-bottom: 2px solid var(--blue);
+    border-top: 2px solid var(--yellow);
+
+}
+
+.delete-project:not(:disabled):hover {
+    color: var(--red)
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+.create-todo:not(:disabled):hover {
+    color:var(--blue);
+}
+
+
+
+.todos-container {
+    margin: 1rem 5rem;
+    gap: 1rem;
+    overflow-y: auto;
+    max-height: 85vh;
+    scrollbar-width: thin;
+    scrollbar-color: var(--black) var(--white);
+    padding: 0 1rem;
+}
+
+.todos-container li:first-child {
+    margin-top: 0.2rem;
+}
+
+.todo {
+    padding: 0.4rem 0.5rem;
+    margin-bottom: 1rem;
+
+    list-style: none;
+
+    display: grid;
+    grid-template-columns: 40px 1fr 1fr 40px 40px ;
+    gap: 0.5rem;
+    align-items: center;
+
+    transition: all 0.5s;
+}
+
+.todo.animation-start {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.todo.animation-finished {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.todo.animation-exit {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+    transition: opacity 0.3s ease-in, transform 0.3s ease-in;
+}
+
+.todo:hover {
+    transform: scale(102%);
+}
+
+.todo h3 {
+    font-size: 1.2rem;
+    font-weight: normal;
+}
+
+.todo input[type="checkbox"]:before {
+    height: 1.2rem;
+    display: inline-block;
+    
+}
+
+.todo input[type="checkbox"]:before {
+    background-color: var(--white);
+}
+
+.todo button {
+    border: 0px solid transparent;
+    height: 40px;
+    width: 40px;
+    color: none;
+}
+
+.todo h3, .todo p {
+    cursor: pointer;
+}
+
+
+.due-date {
+    text-align: end;
+    margin-right: 1rem;
+}
+
+.close {
+    background: url(Icons/close-svgrepo-com.svg) center / contain no-repeat;
+    transition: transform 0.5s;
+}
+
+.show-more {
+    background: url(Icons/chevron-down-svgrepo-com.svg) center / contain no-repeat;
+    transition: transform 0.5s;
+}
+
+.show-more:hover {
+    transform: scale(0.85);
+}
+
+.show-more.show-less {
+    transform: rotate(-180deg);
+
+}
+
+.show-more.show-less:hover {
+    transform: scale(0.85) rotate(-180deg);
+}
+
+.close:hover {
+    transform: scale(0.85);
+}
+
+.low-priority {
+    border-top: 3px solid var(--blue);
+    border-bottom: 3px solid var(--blue);
+}
+
+.medium-priority {
+    border-top: 3px solid var(--yellow);
+    border-bottom: 3px solid var(--yellow);
+}
+
+.high-priority {
+    border-top: 3px solid var(--red);
+    border-bottom: 3px solid var(--red);
+}
+
+.hidden {
+    display: none;
+    width: 62.5vw;
+    padding: 0 3rem
+}
+
+.visible {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-group {
+    display: inline-flex;
+    width: 100%;
+}
+
+.btn-group button {
+    padding: 0.3rem 1rem;
+    text-align: center;
+
+    outline: none;
+    border: none;
+    
+    border-right: 2px solid var(--white);
+
+    color: var(--black);
+    font-family: inherit;
+    font-size: 0.8rem;
+
+    width: 80px;
+    height: 30px;
+
+    background-color: #E0E0E0;
+}
+
+.btn-group :last-child {
+    border-right: none;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.btn-group :first-child {
+    border-bottom-left-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+.btn-group :first-child:hover {
+    background-color: #5463FF;
+}
+
+.btn-group :last-child:hover {
+    background-color: var(--red);
+}
+
+.btn-group :nth-child(2):hover {
+    background-color: var(--yellow);
+}
+
+.description {
+    margin: 1rem 1rem 0.5rem 1rem;
+    text-align: justify;
+    font-size: 0.9rem;
+}
+
+.description:empty::before {
+    content: "Add description...";
+    color: #999;
+    font-style: italic;
+    font-size: 0.8rem;
+}
+
+.done {
+    border-top: 3px dashed #b5b5b5;
+    border-bottom: 3px dashed #b5b5b5;
+    color: #9c9c9c;
+}
+
+dialog {
+    justify-self: center;
+    align-self: center;
+    padding: 3rem 3rem;
+    text-align: center;
+    border-top:4px solid var(--red);
+    border-bottom:4px solid var(--red);
+    border-right:4px solid var(--yellow);
+    border-left:4px solid var(--blue);
+
+}
+
+dialog button {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    padding: 0.5rem 3rem;
+    border-radius: 1rem;
+    font-weight: 600;
+}
+
+dialog label {
+    display: none;
+}
+
+dialog input, button, select{
+    font-family: inherit;
+}
+
+dialog p {
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.new-todo-modal form{
+    display: flex;
+    flex-direction: column;
+
+    gap: 1rem;
+}
+
+.new-project-modal {
+    justify-items: center;
+}
+
+.new-project-modal * {
+    display: block;
+}
+
+.new-project-modal input{
+    margin: 1rem 0;
+}
+
+.new-project-modal label {
+    display: inline;
+}
+
+.delete-project-modal :last-child {
+    margin-left: 1rem;
+    background-color: var(--red);
+}
+
+li input {
+    height: 1.2rem;
+    background-color: #E0E0E0;
+    font-family: inherit;
+}
+
+.title-input {
+    max-width: 300px;
+    font-size: 1.2rem;
+}
+
+.date-input {
+    max-width: 110px;
+    height: 1.2rem;
+    margin-left: auto;
+}
+
+.description-input {
+    margin: 1rem 1rem 0.5rem 1rem;
+    padding: 0.5rem 0.5rem;
+    background-color: #E0E0E0;
+    resize: vertical;    
+}
