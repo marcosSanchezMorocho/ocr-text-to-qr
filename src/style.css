@@ -52,6 +52,40 @@ iframe {
     border: none;
 }
 
+.cameraBtn {
+    --s: 60px; /* the size on the corner */
+    --t: 20px;  /* the thickness of the border */
+    --g: 0px; /* the gap between the border and image */
+
+    padding: calc(var(--g) + var(--t));
+    outline: var(--t) solid #000000; /* the color here */
+    outline-offset: calc(-1*var(--t));
+    mask:
+    conic-gradient(at var(--s) var(--s),#0000 75%,#000 0)
+    0 0/calc(100% - var(--s)) calc(100% - var(--s)),
+    linear-gradient(#000 0 0) content-box;
+    transition: .2s;
+}
+.cameraBtn:click {
+    outline: var(--t) solid #78BE20
+  }
+
 button {
     cursor: pointer;
+    background-color: transparent;
+    border: none;
 }
+
+button img {
+    width: 30rem;
+}
+
+#test{
+    display: none;
+}
+
+#qrCanvas {
+    width: 500px;
+    height: 500px;
+}
+
