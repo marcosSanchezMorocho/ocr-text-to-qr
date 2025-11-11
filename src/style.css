@@ -24,26 +24,37 @@ html {
     font-weight: normal;
 }
 
-nav {
+header {
     min-height: 10rem;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     
-    background-color: #78BE20;
-    color: #fff;
+    background-color: #fff;
     font-size: 2rem;
-    
+    padding: 1.5rem;
 }
 
+header img {
+    max-width: 30%;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
 div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-height: 100%;
-    flex: 1;
+
+    border-radius: 2rem;
+    background-color: #78BE20;
+    padding: 15rem 10rem;
 }
 
 iframe {
@@ -66,14 +77,12 @@ iframe {
     linear-gradient(#000 0 0) content-box;
     transition: .2s;
 }
-.cameraBtn:click {
-    outline: var(--t) solid #78BE20
-  }
 
 button {
     cursor: pointer;
     background-color: transparent;
     border: none;
+    font-size: 4REM;
 }
 
 button img {
@@ -84,8 +93,30 @@ button img {
     display: none;
 }
 
+canvas{
+    display: none;
+    margin-top: 10rem;
+}
+
 #qrCanvas {
     width: 500px;
     height: 500px;
+    background-color: #78BE20;
+
+    --s: 60px; /* the size on the corner */
+    --t: 20px;  /* the thickness of the border */
+    --g: 0px; /* the gap between the border and image */
+
+    padding: calc(var(--g) + var(--t));
+    outline: var(--t) solid #000000; /* the color here */
+    outline-offset: calc(-1*var(--t));
+    mask:
+    conic-gradient(at var(--s) var(--s),#0000 75%,#000 0)
+    0 0/calc(100% - var(--s)) calc(100% - var(--s)),
+    linear-gradient(#000 0 0) content-box;
+    transition: .2s;
 }
 
+.displayCanvas {
+    display: block;
+}

@@ -25,10 +25,13 @@ async function getMedia(constraints) {
   const ret = await worker.recognize(testImg);
   const canvas = document.querySelector("#qrCanvas");
   console.log(ret.data.text);
-  QRCode.toCanvas(canvas,ret.data.text, (error)=>{
+  QRCode.toCanvas(canvas,ret.data.text,{
+    width:500,
+  },(error)=>{
     if (error) 
       console.error(error);
   })
+  canvas.classList.add("displayCanvas");
   await worker.terminate();
 })();
 
