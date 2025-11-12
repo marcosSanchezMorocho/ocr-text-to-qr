@@ -66,7 +66,7 @@ iframe {
     border: none;
 }
 
-.cameraBtn {
+.permissionBtn {
     --s: 60px; /* the size on the corner */
     --t: 20px;  /* the thickness of the border */
     --g: 0px; /* the gap between the border and image */
@@ -120,6 +120,10 @@ canvas{
     transition: .2s;
 }
 
-.displayCanvas {
-    display: block;
+.hidden {
+    display: none;
+}
+
+.active {
+    display: block
 }

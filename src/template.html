@@ -11,10 +11,16 @@
     </header>
     <main>
         <div>
-        <img src="./images/test.png" alt="test" id="test">
-        <button class="cameraBtn">
-            <img src="./images/camera-svgrepo-com.png" alt="Camara">
+        <button id="allowBtn" class="permissionBtn">
+            <img src="./images/camera-svgrepo-com.png" alt="Camera">
         </button>
+        <div id="camera" class="hidden">
+            <video id="cameraVideo"></video>
+            <button id="captureBtn"><img src="./images/camera-svgrepo-com.png" alt="Camera"></button>
+            <canvas id="photoCanvas" class="hidden"></canvas>
+            <img id="photo" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="The photo appears in this box" class="hidden">
+        </div>
+        <p id="ocr-text"></p>
         <canvas id="qrCanvas"></canvas>
         </div>
     </main>

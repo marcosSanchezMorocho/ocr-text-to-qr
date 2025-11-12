@@ -2,37 +2,95 @@ import "./style.css";
 import { createWorker } from 'tesseract.js';
 import QRCode from 'qrcode';
 
-const cameraBtn = document.querySelector(".cameraBtn");
+const allowBtn = document.querySelector("#allowBtn");
+const cameraDiv = document.querySelector("#camera");
+const video = document.querySelector("#cameraVideo");
+const captureBtn = document.querySelector("#captureBtn");
+const photoCanvas = document.querySelector("#photoCanvas");
+const photo = document.querySelector("#photo");
+const text = document.querySelector("#ocr-text");
 
-cameraBtn.addEventListener("click",()=>{getMedia({video:true, audio:false})})
+const width = 320; // We will scale the photo width to this
+let height = 0; // This will be computed based on the input stream
 
-async function getMedia(constraints) {
-  console.log("We are so in!");
+let streaming = false;
+
+allowBtn.addEventListener("click",()=>{
   let stream = null;
-  try {
-    stream = await navigator.mediaDevices.getUserMedia(constraints);
-    
-    (async () => {
-      const worker = await createWorker('eng');
-      const testImg = document.querySelector("#test");
-      const ret = await worker.recognize(testImg);
-      const canvas = document.querySelector("#qrCanvas");
-      console.log(ret.data.text);
-      QRCode.toCanvas(canvas,ret.data.text,{
-        width:500,
-      },(error)=>{
-        if (error) 
-          console.error(error);
-      })
-      canvas.classList.add("displayCanvas");
-      await worker.terminate();
-    })();
-      /* use the stream */
-  } catch (err) {
-      /* handle the error */
-      console.log(err);
+  navigator.mediaDevices
+    .getUserMedia({ video: {facingMode: "environment"}, audio: false })
+    .then((stream) => {
+      cameraDiv.classList.toggle("hidden");
+      allowBtn.classList.toggle("hidden");
+      video.srcObject = stream;
+      video.play();
+    })
+    .catch((err) => {
+      console.error(`An error occurred: ${err}`);
+    });
+});
+
+video.addEventListener("canplay", (ev) => {
+  if (!streaming) {
+    height = video.videoHeight / (video.videoWidth / width);
+
+    video.setAttribute("width", width);
+    video.setAttribute("height", height);
+    canvas.setAttribute("width", width);
+    canvas.setAttribute("height", height);
+    streaming = true;
+  }
+});
+
+captureBtn.addEventListener("click", (ev) => {
+  takePicture();
+  ev.preventDefault();
+});
+
+function clearPhoto() {
+  const context = photoCanvas.getContext("2d");
+  context.fillStyle = "#aaaaaa";
+  context.fillRect(0, 0, photoCanvas.width, photoCanvas.height);
+
+  const data = canvas.toDataURL("image/png");
+  photo.setAttribute("src", data);
+}
+clearPhoto();
+
+function takePicture() {
+  const context = photoCanvas.getContext("2d");
+  if (width && height) {
+    canvas.width = width;
+    canvas.height = height;
+    context.drawImage(video, 0, 0, width, height);
+
+    const data = photoCanvas.toDataURL("image/png");
+    photo.setAttribute("src", data);
+    cameraDiv.classList.toggle("hidden");
+    allowBtn.classList.toggle("hidden");
+  } else {
+    clearPhoto();
   }
 }
+
+// Tesseract and qr creation
+async function displayQr() {
+  const worker = await createWorker('eng');
+  //add image to recognize
+  const ret = await worker.recognize();
+  const canvas = document.querySelector("#qrCanvas");
+  text.textContent = ret.data.text;
+  QRCode.toCanvas(canvas,ret.data.text,{
+    width:500,
+  },(error)=>{
+    if (error) 
+      console.error(error);
+  })
+  canvas.classList.add("active");
+  await worker.terminate();
+};
+
+
 
 
 
