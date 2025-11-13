@@ -120,6 +120,10 @@ canvas{
     transition: .2s;
 }
 
+#captureBtn {
+    max-width: 10%;
+}
+
 .hidden {
     display: none;
 }
