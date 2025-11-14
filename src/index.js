@@ -78,6 +78,9 @@ function takePicture() {
 // Tesseract and qr creation
 async function displayQr() {
   const worker = await createWorker('eng');
+  await worker.setParameters({
+    tessedit_char_whitelist: '0123456789'
+  });
   //add image to recognize
   const ret = await worker.recognize(photo);
   const canvas = document.querySelector("#qrCanvas");
