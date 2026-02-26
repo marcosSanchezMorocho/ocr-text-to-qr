@@ -10,7 +10,6 @@
 }
 
 html, body {
-    height: 100%;
     color: #000;
 }
 body{
@@ -30,40 +29,50 @@ header {
     justify-content: center;
     align-items: center;
     text-align: center;
-    
     padding: 3%;
 }
 
 header img {
     max-width: 20%;
 }
+
 main {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    flex: 1;
-    padding: 0 5%;
+    padding: 5% 5%;
 }
-div {
+
+main div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     border-radius: 2rem;
     background-color: #78BE20;
     padding: 12% 10%;
+    width: 100%;
+    box-sizing: border-box;
 }
 
+.camera-active {
+    padding: 0;
+}
+
+#camera {
+    padding-top: 7%;
+}
+
+.qr-text {
+    padding-top: 0.5rem;
+}
 
 .permissionBtn {
-    --s: 60px; /* the size on the corner */
-    --t: 20px;  /* the thickness of the border */
-    --g: 0px; /* the gap between the border and image */
-
+    --s: 60px;
+    --t: 20px;
+    --g: 0px;
     padding: calc(var(--g) + var(--t));
-    outline: var(--t) solid #000000; /* the color here */
+    outline: var(--t) solid #000000;
     outline-offset: calc(-1*var(--t));
     mask:
     conic-gradient(at var(--s) var(--s),#0000 75%,#000 0)
@@ -82,36 +91,27 @@ button img {
     width: 90%;
 }
 
-#test{
-    display: none;
-}
-
-canvas{
+canvas {
     display: none;
     margin-top: 10%;
 }
 
-#qrCanvas {
-    width: 500px;
-    height: 500px;
-    background-color: #78BE20;
+#qrContainer canvas {
+    display: block;
+    margin-top: 10%;
+}
 
-    --s: 60px; /* the size on the corner */
-    --t: 20px;  /* the thickness of the border */
-    --g: 0px; /* the gap between the border and image */
-
-    padding: calc(var(--g) + var(--t));
-    outline: var(--t) solid #000000; /* the color here */
-    outline-offset: calc(-1*var(--t));
-    mask:
-    conic-gradient(at var(--s) var(--s),#0000 75%,#000 0)
-    0 0/calc(100% - var(--s)) calc(100% - var(--s)),
-    linear-gradient(#000 0 0) content-box;
-    transition: .2s;
+#qrContainer:empty {
+    display: none;
 }
 
 #captureBtn {
     max-width: 50%;
+}
+
+#cameraVideo {
+    max-width: 100%;
+    max-height: 50vh;
 }
 
 .hidden {
@@ -119,5 +119,5 @@ canvas{
 }
 
 .active {
-    display: block
+    display: block;
 }
