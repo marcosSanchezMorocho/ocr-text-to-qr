@@ -91,7 +91,6 @@ async function displayQr() {
     tessedit_char_whitelist: '0123456789'
   });
 
-  document.body.appendChild(photoCanvas)
   const ret = await worker.recognize(photoCanvas);
   await worker.terminate();
 
@@ -101,8 +100,9 @@ async function displayQr() {
   const matches = rawText.match(/\b991\d{14}\b/g);
   const qrContainer = document.querySelector("#qrContainer");
   qrContainer.innerHTML = "";
+  if (text) text.textContent = "";
 
-  if (matches) {
+  if (matches && matches.length > 0) {
     matches.forEach((code) => {
       const canvas = document.createElement("canvas");
       const pText = document.createElement("p");
@@ -115,7 +115,7 @@ async function displayQr() {
       });
     });
   } else {
-    text.textContent = "Número no encontrado, inténtalo otra vez";
+    if (text) text.textContent = "Número no encontrado, inténtalo otra vez";
   }
 }
 

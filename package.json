@@ -14,7 +14,7 @@
     "start": "webpack serve --open --config webpack.dev.js",
     "deploy": "git subtree push --prefix dist origin gh-pages",
     "deploygh": "npm run build && gh-pages -d dist",
-    "clean": "rm -rf dist/",
+    "clean": "node -e \"const fs=require('fs');fs.rmSync('dist',{recursive:true,force:true});\"",
     "lint": "eslint ."
   },
   "dependencies": {
