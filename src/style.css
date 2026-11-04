@@ -1,7 +1,31 @@
-:root  {
-    --white: #fff;
-    --black: #000;
-    --green: #78BE20;
+:root {
+    color-scheme: light dark;
+
+    --bg: #f2f5ec;
+    --bg-accent: #e4ebd8;
+    --text: #12160e;
+    --muted-text: #4a5340;
+    --card-bg: #78be20;
+    --card-text: #0c1405;
+    --accent: #4f8a0d;
+    --qr-frame: #ffffff;
+    --icon-filter: none;
+    --shadow: 0 18px 40px rgba(34, 48, 12, 0.18);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #0e120a;
+        --bg-accent: #151c0e;
+        --text: #edf3e3;
+        --muted-text: #aebba0;
+        --card-bg: #1c2810;
+        --card-text: #edf3e3;
+        --accent: #9ad84a;
+        --qr-frame: #ffffff;
+        --icon-filter: brightness(0) invert(0.92);
+        --shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+    }
 }
 
 * {
@@ -9,19 +33,33 @@
     margin: 0;
 }
 
-html, body {
-    color: #000;
-}
-body{
-    display: flex;
-    flex-direction: column;
+*,
+*::before,
+*::after {
     box-sizing: border-box;
-    background-color: #fff;
 }
 
 html {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-weight: normal;
+    -webkit-text-size-adjust: 100%;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background:
+        radial-gradient(circle at 50% 0%, var(--bg-accent) 0%, transparent 55%),
+        var(--bg);
+    color: var(--text);
+    transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 header {
@@ -29,66 +67,159 @@ header {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 3%;
+    padding: clamp(1rem, 4vw, 2.25rem);
 }
 
-header img {
-    max-width: 20%;
+.site-title {
+    font-size: clamp(1.75rem, 7vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: clamp(0.02em, 0.5vw, 0.08em);
+    color: var(--text);
+}
+
+.site-title span {
+    color: var(--accent);
 }
 
 main {
+    flex: 1;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 5% 5%;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: clamp(1rem, 4vw, 2.5rem);
 }
 
-main div {
+.card {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 2rem;
-    background-color: #78BE20;
-    padding: 12% 10%;
+    gap: clamp(0.75rem, 2.5vw, 1.5rem);
     width: 100%;
-    box-sizing: border-box;
+    max-width: 34rem;
+    padding: clamp(2.5rem, 8vw, 5.5rem) clamp(1.25rem, 6vw, 3rem);
+    border-radius: clamp(1.25rem, 5vw, 2rem);
+    background-color: var(--card-bg);
+    color: var(--card-text);
+    box-shadow: var(--shadow);
+    transition: background-color 0.25s ease, color 0.25s ease, padding 0.2s ease;
 }
 
 .camera-active {
     padding: 0;
+    overflow: hidden;
 }
 
 #camera {
-    padding-top: 7%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+#cameraVideo {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 60dvh;
+    object-fit: contain;
+    background-color: #000;
+}
+
+#captureBtn {
+    width: min(45%, 140px);
+    margin: 1rem auto;
+}
+
+#ocr-text {
+    margin-top: 0.5rem;
+    text-align: center;
+    line-height: 1.5;
+    font-size: clamp(0.95rem, 2.6vw, 1.15rem);
+    color: var(--card-text);
+}
+
+#ocr-text:empty {
+    display: none;
 }
 
 .qr-text {
-    padding-top: 0.5rem;
+    font-size: clamp(0.85rem, 3vw, 1.05rem);
+    color: var(--card-text);
+    word-break: break-all;
+    text-align: center;
+}
+
+#qrContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(0.75rem, 2.5vw, 1.25rem);
+    width: 100%;
+}
+
+#qrContainer:empty {
+    display: none;
+}
+
+#qrContainer canvas {
+    display: block;
+    width: min(250px, 100%);
+    height: auto;
+    margin: 0;
+    padding: clamp(0.5rem, 2vw, 1rem);
+    background-color: var(--qr-frame);
+    border-radius: 1rem;
 }
 
 .permissionBtn {
-    --s: 60px;
-    --t: 20px;
+    --s: clamp(40px, 14vw, 60px);
+    --t: clamp(12px, 4vw, 20px);
     --g: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: min(50%, 170px);
+    aspect-ratio: 1 / 1;
     padding: calc(var(--g) + var(--t));
-    outline: var(--t) solid #000000;
-    outline-offset: calc(-1*var(--t));
+    outline: var(--t) solid var(--card-text);
+    outline-offset: calc(-1 * var(--t));
     mask:
-    conic-gradient(at var(--s) var(--s),#0000 75%,#000 0)
-    0 0/calc(100% - var(--s)) calc(100% - var(--s)),
-    linear-gradient(#000 0 0) content-box;
-    transition: .2s;
+        conic-gradient(at var(--s) var(--s), #0000 75%, #000 0)
+        0 0 / calc(100% - var(--s)) calc(100% - var(--s)),
+        linear-gradient(#000 0 0) content-box;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.permissionBtn:hover {
+    transform: scale(1.03);
+}
+
+.permissionBtn:active {
+    transform: scale(0.97);
 }
 
 button {
     cursor: pointer;
     background-color: transparent;
     border: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 4px;
 }
 
 button img {
+    display: block;
     width: 90%;
+    height: auto;
+    margin: 0 auto;
+    filter: var(--icon-filter);
 }
 
 canvas {
@@ -96,28 +227,41 @@ canvas {
     margin-top: 10%;
 }
 
-#qrContainer canvas {
-    display: block;
-    margin-top: 10%;
-}
-
-#qrContainer:empty {
-    display: none;
-}
-
-#captureBtn {
-    max-width: 50%;
-}
-
-#cameraVideo {
-    max-width: 100%;
-    max-height: 50vh;
-}
-
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .active {
     display: block;
+}
+
+@media (max-height: 620px) and (orientation: landscape) {
+    header {
+        padding: 0.5rem 1rem;
+    }
+
+    .site-title {
+        font-size: 1.5rem;
+    }
+
+    main {
+        padding: 0.75rem 1rem;
+    }
+
+    .card {
+        max-width: 44rem;
+        padding: 1rem 1.5rem;
+    }
+
+    #cameraVideo {
+        max-height: 55dvh;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+    }
 }

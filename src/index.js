@@ -9,19 +9,11 @@ const captureBtn = document.querySelector("#captureBtn");
 const photoCanvas = document.querySelector("#photoCanvas");
 const photo = document.querySelector("#photo");
 const text = document.querySelector("#ocr-text");
+const card = document.querySelector(".card");
 
 const width = 640;
 let height = 0;
 let streaming = false;
-
-(()=> {
-  const vh = window.innerHeight;
-  const header = document.getElementById('mainHeader');
-  const headerHeight = header ? header.offsetHeight : 0;
-
-  document.body.style.height = vh + "px";
-  document.querySelector("main").style.height = (vh - headerHeight) + 'px';
-})()
 
 allowBtn.addEventListener("click",()=>{
   navigator.mediaDevices
@@ -29,8 +21,8 @@ allowBtn.addEventListener("click",()=>{
     .then((stream) => {
       cameraDiv.classList.toggle("hidden");
       allowBtn.classList.toggle("hidden");
-      document.querySelector("main div").classList.add("camera-active");
-      document.querySelector("#camera").classList.add("camera-active");
+      card.classList.add("camera-active");
+      cameraDiv.classList.add("camera-active");
       video.srcObject = stream;
       video.play();
     })
@@ -76,8 +68,8 @@ function takePicture() {
     photo.setAttribute("src", data);
 
     cameraDiv.classList.toggle("hidden");
-    document.querySelector("main div").classList.remove("camera-active");
-    document.querySelector("#camera").classList.remove("camera-active");
+    card.classList.remove("camera-active");
+    cameraDiv.classList.remove("camera-active");
     allowBtn.classList.toggle("hidden");
     displayQr();
   } else {

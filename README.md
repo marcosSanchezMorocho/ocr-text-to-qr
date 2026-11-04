@@ -2,6 +2,10 @@
 
 Aplicación web para escanear códigos de Leroy Merlin (que comienzan por `991`) mediante la cámara del dispositivo, extraer el número con OCR y generar su código QR correspondiente.
 
+## Demo
+
+[https://marcossanchezmorocho.github.io/ocr-text-to-qr/](https://marcossanchezmorocho.github.io/ocr-text-to-qr/)
+
 ## Funcionalidades
 
 - Acceso a cámara trasera del dispositivo
@@ -10,7 +14,8 @@ Aplicación web para escanear códigos de Leroy Merlin (que comienzan por `991`)
 - Reconocimiento OCR con [Tesseract.js](https://tesseract.projectnaptha.com/)
 - Filtrado de códigos con formato `991` + 14 dígitos
 - Generación de códigos QR con [qrcode](https://github.com/soldair/node-qrcode)
-- Optimizado para uso móvil
+- Diseño responsive optimizado para móvil, tablet y escritorio
+- Tema claro/oscuro automático según la preferencia del sistema
 
 ## Tecnologías
 
@@ -31,6 +36,15 @@ npm start
 # Build para producción
 npm run build
 ```
+
+## Despliegue
+
+```bash
+# Compilar y publicar en GitHub Pages
+npm run deploygh
+```
+
+El sitio se publica desde la rama `gh-pages`.
 
 ## Uso
 

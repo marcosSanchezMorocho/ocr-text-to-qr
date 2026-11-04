@@ -3,25 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Escanea códigos de Leroy Merlin con la cámara, extrae el número mediante OCR y genera su código QR.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#78be20" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0e120a" media="(prefers-color-scheme: dark)">
     <title>Leroy Merlin: Texto a QR</title>
 </head>
 <body>
     <header>
-        <img src="./images/qr-scan-svgrepo-com.svg" alt="Leroy Merlin Logo">
+        <h1 class="site-title">OCR <span>to</span> QR</h1>
     </header>
     <main>
-        <div>
-        <button id="allowBtn" class="permissionBtn">
-            <img src="./images/camera-svgrepo-com.png" alt="Camera">
-        </button>
-        <div id="camera" class="hidden">
-            <video id="cameraVideo"></video>
-            <button id="captureBtn"><img src="./images/camera-svgrepo-com.png" alt="Camera"></button>
-            <canvas id="photoCanvas" class="hidden"></canvas>
-            <img id="photo" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="The photo appears in this box" class="hidden">
-        </div>
-        <p id="ocr-text"></p>
-        <div id="qrContainer"></div>
+        <div class="card">
+            <button id="allowBtn" class="permissionBtn" type="button" aria-label="Permitir acceso a la cámara">
+                <img src="./images/camera-svgrepo-com.png" alt="">
+            </button>
+            <div id="camera" class="hidden">
+                <video id="cameraVideo" autoplay muted playsinline></video>
+                <button id="captureBtn" type="button" aria-label="Capturar número">
+                    <img src="./images/camera-svgrepo-com.png" alt="">
+                </button>
+                <canvas id="photoCanvas" class="hidden"></canvas>
+                <img id="photo" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="The photo appears in this box" class="hidden">
+            </div>
+            <p id="ocr-text" role="status" aria-live="polite"></p>
+            <div id="qrContainer" aria-live="polite"></div>
         </div>
     </main>
 </body>
